@@ -39,6 +39,10 @@ var dataPage = {
 	domain:{
 		en:'',
 		fr:''
+	},
+	image:{
+		en:'',
+		fr:''
 	}
 };
 
