@@ -1,0 +1,13 @@
+		<section>
+			<ul class="component list image">
+				<% detailDomain.listImage.forEach(function(image) { %><li>
+					<h3><%= image.md5 + "." + image.ext %></h3>
+					<div>
+						<img src="<%= dataSite.uri.camImageStore + "archive/" + detailDomain.code + "/" + image.md5 + ".thumb." + image.ext %>" width="150" height="150" alt="">
+						<ul>
+							<% image.listTag.forEach(function(tag) { %><li class="tag <%= tag[0] %>"><a href="#<%= tag[0] + "_" + tag[1] %>"><%= tag[1] %></a></li><% }); %>
+						</ul>
+					</div>
+				</li><% }); %>
+			</ul>	
+		</section>

@@ -1,0 +1,16 @@
+		<section>
+			<h2 aria-hidden="true">Promotions</h2>
+			<div class="component carousel">
+			<ul><% indexPromo.banner.forEach(function(banner,bannerNumber) {%><li aria-label="image <%= bannerNumber + 1 %> : <%= banner[detailPage.lang].title %>" tabindex="0"<% if (!bannerNumber) { %> aria-current="location"<% }; %>></li><% }); %></ul>
+			<% indexPromo.banner.forEach(function(banner,bannerNumber) {%><a href="/<%= detailPage.lang + banner[detailPage.lang].uriCategory + banner[detailPage.lang].uri %>"><h3><img src="<%= dataSite.uri.rootAsset + "img/" + banner.segment + banner.en.uri %>-banner.jpg" width="980" height="450" alt="<%= banner[detailPage.lang].title %>" aria-hidden="<%= !!bannerNumber %>"></h3></a><% }); %>			
+			</div>
+			
+			<div class="component col3 himg">
+			<% indexPromo.badge.forEach(function(badge,badgeNumber) {%><div>
+				<a href="/<%= detailPage.lang + badge[detailPage.lang].uriCategory + badge[detailPage.lang].uri %>">
+				<h3><%= badge[detailPage.lang].title %></h3>
+				<img src="<%= dataSite.uri.rootAsset + "img/" + badge.segment + badge.en.uri %>-badge.jpg" width="320" height="200" alt="">
+				</a>
+			</div><% }); %>	
+			</div>
+		</section>

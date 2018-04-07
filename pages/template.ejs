@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="<%= detailPage.lang %>">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="<%= detailPage.meta.desc %>">
+	<title><%= detailPage.meta.title %></title>
+
+	<link rel="canonical" href="<%= dataSite.uri.rootSite + "/" + detailPage.lang + detailPage.canon[detailPage.lang] %>" />
+	<link rel="alternate" hreflang="en" href="<%= dataSite.uri.rootSite + "/en" + detailPage.canon.en %>" />
+	<link rel="alternate" hreflang="fr" href="<%= dataSite.uri.rootSite + "/fr" + detailPage.canon.fr %>" />
+
+	<link rel="stylesheet" type="text/css" href="<%= dataSite.uri.rootAsset %>cam.css" />
+</head>
+<body>
+	<header>
+		<div>
+			<h1><%= dataSite.title[detailPage.lang] %></h1>
+			<nav aria-labelledby="siteNavTitle">
+				<% if (detailPage.lang == "en") { %><h2 id="siteNavTitle">Site Navigation</h2>
+				<ul>
+					<li><a href="/en/<%= detailDomain.uri %>"<% if (detailPage.nav.segment == "index") { %> aria-current="location"<% }; %>>Home</a></li>
+					<li>
+						<a href="/en/<%= detailDomain.uri %>/image"<% if (detailPage.nav.segment == "image") { %> aria-current="page"<% }; %>>Images</a>
+					</li>
+				</ul>
+				<ul>
+					<li><form id="f_domain" action="" method="post"><select id="s_domain"><option value="smithy">Canbotics Smithy</option></select></form></li>
+					<li><a href="/fr<%= detailPage.canon.fr %>">Français</a></li>
+				</ul><% } else { %><h2 id="siteNavTitle">Navigation du site</h2>
+				<ul>
+					<li><a href="/en<%= detailPage.canon.en %>">English</a></li>
+				</ul><% }; %>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<% if (detailPage.title.length) { %><h1><%= detailPage.title %></h1><% }; %>
+<%- include(detailPage.template + ".ejs") %>
+
+		<footer id="legal">
+			<h2><% if (detailPage.lang == "en") { -%>Legal Disclaimers<% } else { -%>Avis de non-responsabilité<% }; -%></h2>
+<% if (detailPage.lang == "en") { %>
+			<ul>
+				<li>&copy;2018 OciCat Media.</li>
+			</ul>
+<% } else { %>
+			<ul>
+				<li>Conception, concept et copie exacte &copy;2018 OciCat Media. La plupart des informations proviennent de <a href="https://fr.wikipedia.org" rel="external">Wikipédia</a>. Les images utilisées sont achetées auprès <a href="https://stock.adobe.com/ca_fr/" rel="external">d'Adobe Stock</a>. <a href="https://translate.google.ca/" rel="external">Google translate</a> utilisé pour les traductions.</li>
+			</ul>
+<% } -%>
+		</footer>
+	</main>
+	<script src="<%= dataSite.uri.rootAssetGlobal %>jquery-3.3.1.min.js"></script>
+	<script src="<%= dataSite.uri.rootAsset %>canbotics-smithy.js"></script>
+</body>
+</html>
