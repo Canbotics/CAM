@@ -18,14 +18,16 @@
 			<nav aria-labelledby="siteNavTitle">
 				<% if (detailPage.lang == "en") { %><h2 id="siteNavTitle">Site Navigation</h2>
 				<ul>
-					<li><a href="/en/<%= detailDomain.uri %>"<% if (detailPage.nav.segment == "index") { %> aria-current="location"<% }; %>>Home</a></li>
+					<li><a href="/en/<%= detailDomain.uri %>"<% if (detailPage.nav.segment == "index") { %> aria-current="page"<% }; %>>Home</a></li>
 					<li>
 						<a href="/en/<%= detailDomain.uri %>/image"<% if (detailPage.nav.segment == "image") { %> aria-current="page"<% }; %>>Images</a>
 					</li>
 				</ul>
 				<ul>
-					<li><form id="f_domain" action="" method="post"><select id="s_domain"><option value="smithy">Canbotics Smithy</option></select></form></li>
 					<li><a href="/fr<%= detailPage.canon.fr %>">Français</a></li>
+				</ul>
+				<ul>
+					<li><form id="f_domain" action="" method="post"><select id="s_domain"><option value="smithy">Canbotics Smithy</option></select></form></li>
 				</ul><% } else { %><h2 id="siteNavTitle">Navigation du site</h2>
 				<ul>
 					<li><a href="/en<%= detailPage.canon.en %>">English</a></li>

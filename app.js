@@ -63,15 +63,54 @@ var dataPage = {
 app.get('/',function(request,response) {
 	var detailPage = {lang:'en',title:'',template:'index',uri:{},canon:{},meta:{},nav:{},disc:[]};
 
-	response.render('template',{dataSite:dataSite,detailPage:detailPage});
+	var detailDomain = {id:'',code:'',listImage:[]};
+	detailDomain.id = 1;
+	detailDomain.code = 'smithy';
+	detailDomain.uri = 'canbotics-smithy';
+
+	response.render('template',{dataSite:dataSite,detailPage:detailPage,detailDomain:detailDomain});
 });
 
-app.get('/domain',function(request,response) {
+app.get('/:langCode(en|fr)',function(request,response) {
 	var detailPage = {lang:'en',title:'domain',template:'index',uri:{},canon:{},meta:{},nav:{},disc:[]};
-	
-	
 
-	response.render('template',{dataSite:dataSite,detailPage:detailPage});
+	var detailDomain = {id:'',code:'',listImage:[]};
+	detailDomain.id = 1;
+	detailDomain.code = 'smithy';
+	detailDomain.uri = 'canbotics-smithy';
+
+	response.render('template',{dataSite:dataSite,detailPage:detailPage,detailDomain:detailDomain});
+});
+
+app.get('/:langCode(en|fr)/:uriDomain([a-z0-9-]+)',function(request,response) {
+	var detailPage = {lang:request.params.langCode,title:'',template:'index',uri:{},canon:{},meta:{},nav:{},disc:[]};
+
+	var detailDomain = {id:'',code:'',listImage:[]};
+	
+	dbCam.query('SELECT lib_domain.domain_id, domain_name, domain_code, lib_domain_lang.domain_lang, lib_domain_lang.domain_title, lib_domain_lang.domain_uri FROM lib_domain INNER JOIN lib_domain_lang ON lib_domain.domain_id = lib_domain_lang.domain_id INNER JOIN lib_domain_lang AS xref_domain_lang ON lib_domain.domain_id = xref_domain_lang.domain_id AND xref_domain_lang.domain_uri = ?',[request.params.uriDomain], function (error, results, fields) {
+		if (error) throw error;
+		
+		if (results.length) {
+			results.forEach(function(rsDetailPage){
+				if (rsDetailPage.domain_lang == detailPage.lang) {
+					detailPage.title = rsDetailPage.domain_title;
+					detailPage.meta.title = rsDetailPage.domain_title + " | " + dataSite.title[rsDetailPage.domain_lang];
+					detailPage.nav = {segment:'index',domain:rsDetailPage.domain_code,page:''};
+					detailPage.meta.desc = dataPage[detailPage.nav.segment][rsDetailPage.domain_lang];
+
+					detailDomain.id = rsDetailPage.domain_id;
+					detailDomain.code = rsDetailPage.domain_code;
+					detailDomain.uri = rsDetailPage.domain_uri;
+				}
+				detailPage.uri[rsDetailPage.domain_lang] =  "/" + rsDetailPage.domain_uri + "/image";
+				detailPage.canon[rsDetailPage.domain_lang] =  "/" + rsDetailPage.domain_uri + "/image";
+			});
+		} else {
+			console.log("nope")
+		};
+
+		response.render('template',{dataSite:dataSite,detailPage:detailPage,detailDomain:detailDomain});
+	});
 });
 
 app.get('/:langCode(en|fr)/:uriDomain([a-z0-9-]+)/:imagePage(image)',function(request,response) {
@@ -90,7 +129,7 @@ app.get('/:langCode(en|fr)/:uriDomain([a-z0-9-]+)/:imagePage(image)',function(re
 					} else {
 						detailPage.title = "Images " + rsDetailPage.domain_title;
 					};
-					detailPage.meta.title = rsDetailPage.domain_title + " | " + dataSite.title[rsDetailPage.domain_lang];
+					detailPage.meta.title = "Images | " + rsDetailPage.domain_title + " | " + dataSite.title[rsDetailPage.domain_lang];
 					detailPage.nav = {segment:'image',domain:rsDetailPage.domain_code,page:''};
 					detailPage.meta.desc = dataPage[detailPage.nav.segment][rsDetailPage.domain_lang];
 
