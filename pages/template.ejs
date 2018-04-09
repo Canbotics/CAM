@@ -14,24 +14,32 @@
 <body>
 	<header>
 		<div>
-			<h1><%= dataSite.title[detailPage.lang] %></h1>
+			<h1><a href="/<%= detailPage.lang %>"><%= dataSite.title[detailPage.lang] %></a></h1>
 			<nav aria-labelledby="siteNavTitle">
 				<% if (detailPage.lang == "en") { %><h2 id="siteNavTitle">Site Navigation</h2>
-				<ul>
+				<% if (detailDomain.id) { %><ul>
 					<li><a href="/en/<%= detailDomain.uri %>"<% if (detailPage.nav.segment == "index") { %> aria-current="page"<% }; %>>Home</a></li>
+					<li>
+						<a href="/en/<%= detailDomain.uri %>/asset"<% if (detailPage.nav.segment == "asset") { %> aria-current="page"<% }; %>>Assets</a>
+					</li>
 					<li>
 						<a href="/en/<%= detailDomain.uri %>/image"<% if (detailPage.nav.segment == "image") { %> aria-current="page"<% }; %>>Images</a>
 					</li>
-				</ul>
-				<ul>
+				</ul><% }; } else { %><h2 id="siteNavTitle">Navigation du site</h2>
+				<% if (detailDomain.id) { %><ul>
+					<li><a href="/fr/<%= detailDomain.uri %>"<% if (detailPage.nav.segment == "index") { %> aria-current="page"<% }; %>>Accueil</a></li>
+					<li>
+						<a href="/fr/<%= detailDomain.uri %>/actif"<% if (detailPage.nav.segment == "asset") { %> aria-current="page"<% }; %>>Actif</a>
+					</li>
+					<li>
+						<a href="/fr/<%= detailDomain.uri %>/image"<% if (detailPage.nav.segment == "image") { %> aria-current="page"<% }; %>>Images</a>
+					</li>
+				</ul><% }; }; %>
+				<ul><% if (detailPage.lang == "en") { %>
 					<li><a href="/fr<%= detailPage.canon.fr %>">Français</a></li>
-				</ul>
-				<ul>
-					<li><form id="f_domain" action="" method="post"><select id="s_domain"><option value="smithy">Canbotics Smithy</option></select></form></li>
-				</ul><% } else { %><h2 id="siteNavTitle">Navigation du site</h2>
-				<ul>
+				<% } else { %>
 					<li><a href="/en<%= detailPage.canon.en %>">English</a></li>
-				</ul><% }; %>
+				<% }; %></ul>
 			</nav>
 		</div>
 	</header>
@@ -41,19 +49,15 @@
 <%- include(detailPage.template + ".ejs") %>
 
 		<footer id="legal">
-			<h2><% if (detailPage.lang == "en") { -%>Legal Disclaimers<% } else { -%>Avis de non-responsabilité<% }; -%></h2>
-<% if (detailPage.lang == "en") { %>
-			<ul>
+			<h2><% if (detailPage.lang == "en") { %>Legal Disclaimers<% } else { %>Avis de non-responsabilité<% }; %></h2>
+			<% if (detailPage.lang == "en") { %><ul>
 				<li>&copy;2018 OciCat Media.</li>
-			</ul>
-<% } else { %>
-			<ul>
-				<li>Conception, concept et copie exacte &copy;2018 OciCat Media. La plupart des informations proviennent de <a href="https://fr.wikipedia.org" rel="external">Wikipédia</a>. Les images utilisées sont achetées auprès <a href="https://stock.adobe.com/ca_fr/" rel="external">d'Adobe Stock</a>. <a href="https://translate.google.ca/" rel="external">Google translate</a> utilisé pour les traductions.</li>
-			</ul>
-<% } -%>
+			</ul><% } else { %><ul>
+				<li>&copy;2018 OciCat Media.</li>
+			</ul><% } %>
 		</footer>
 	</main>
 	<script src="<%= dataSite.uri.rootAssetGlobal %>jquery-3.3.1.min.js"></script>
-	<script src="<%= dataSite.uri.rootAsset %>canbotics-smithy.js"></script>
+	<script src="<%= dataSite.uri.rootAsset %>cam.js"></script>
 </body>
 </html>

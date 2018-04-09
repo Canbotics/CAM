@@ -1,4 +1,5 @@
 		<section>
+			<h2><% if (detailPage.lang == "en") { %>Images<% } else { %>Images<% }; %></h2>
 			<ul class="component list image">
 				<% detailDomain.listImage.forEach(function(image) { %><li>
 					<h3><%= image.md5 + "." + image.ext %></h3>

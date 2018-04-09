@@ -1,0 +1,11 @@
+		<section>
+			<h2><% if (detailPage.lang == "en") { %>Domains<% } else { %>Domaines<% }; %></h2>
+			<ul class="component list domain">
+				<% detailDomain.listDomain.forEach(function(domain) { %><li>
+					<a href="/<%= detailPage.lang + "/" + domain.uri %>">
+						<h3><%= domain.title %></h3>
+						<span><%= domain.code %></span>
+					</a>
+				</li><% }); %>
+			</ul>	
+		</section>
